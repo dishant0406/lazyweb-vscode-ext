@@ -1,71 +1,56 @@
-# lazyweb README
 
-This is the README for your extension "lazyweb". After writing up a brief description, we recommend including the following sections.
+# Lazyweb Snippet Extension for VSCode
+
+![Lazyweb Icon](https://app.lazyweb.rocks/assets/favicon.ico)
+
+Easily save code snippets with Lazyweb right from your Visual Studio Code editor.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- **Easy Authentication**: Quickly login to your Lazyweb account.
+- **Save Snippets Instantly**: Selected a piece of code you want to save? Right-click and send it to Lazyweb.
+- **Manage Snippets**: Refresh your saved snippets anytime and manage them directly from VSCode.
 
-For example if there is an image subfolder under your extension project workspace:
+## Usage
 
-\!\[feature X\]\(images/feature-x.png\)
+### 1. Authentication
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+- Launch the command palette in VSCode with `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac).
+- Choose `Lazyweb Snippet Login` and enter your email for authentication.
+
+### 2. Save Snippets
+
+- Highlight the code you wish to save as a snippet.
+- Right-click and choose `Save Selected Code as Snippet`.
+
+### 3. Refresh Snippets
+
+- To refresh the snippets in your Lazyweb account, select `Lazyweb Refresh Snippets` from the command palette.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+Ensure you have the following:
 
-## Extension Settings
+- Visual Studio Code version 1.83.0 or newer.
+- An active Lazyweb account.
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+## Installation
 
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+1. Open Visual Studio Code.
+2. Go to Extensions (or press `Ctrl+Shift+X`).
+3. Search for "lazyweb" and install the extension.
+4. Restart Visual Studio Code.
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- If you find any bugs or issues, please [report them here](https://github.com/dishant0406).
 
-## Release Notes
+## Contribution
 
-Users appreciate release notes as you update your extension.
+Want to contribute to the development of this extension? Check out our [GitHub repository](https://github.com/dishant0406).
 
-### 1.0.0
+## License
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+This extension is licensed under the [MIT License](LICENSE).
 
 ---
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
