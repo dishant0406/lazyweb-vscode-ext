@@ -31,6 +31,10 @@
       {
         "command": "lazyweb.sendSelectedCode",
         "title": "Save Selected Code as Snippet"
+      },
+      {
+        "command": "lazyweb.deleteSnippet",
+        "title": "Delete Snippet"
       }
     ],
     "menus": {
@@ -38,6 +42,13 @@
         {
           "command": "lazyweb.sendSelectedCode",
           "when": "editorHasSelection"
+        }
+      ],
+      "view/item/context": [
+        {
+            "command": "lazyweb.deleteSnippet",
+            "when": "view == lazyweb.snippets && viewItem == snippetItem",
+            "group": "0_modification"
         }
       ]
     },

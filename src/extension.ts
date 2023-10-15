@@ -43,6 +43,10 @@ export async function activate(context: vscode.ExtensionContext) {
     } else {
         vscode.window.showErrorMessage('Authentication failed. Please login to access snippets.');
     }
+
+    context.subscriptions.push(vscode.commands.registerCommand('lazyweb.deleteSnippet', async (snippet: any) => {
+        deleteSnippet(snippet, token);
+    }));
     
 
 }
@@ -196,6 +200,27 @@ async function verifyUser(token:string){
     }
 }
 
+async function deleteSnippet(snippet: any, token: string | undefined){
+    if (!token) {
+        vscode.window.showErrorMessage('Token not found.');
+        return;
+    }
+    try {
+        const {data} = await APIClient.delete(`/snippets/delete/${snippet.shortcut}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        if (data && data.success) {
+            vscode.window.showInformationMessage('Snippet deleted successfully!');
+        }
+        if (snippetDataProvider) {
+            snippetDataProvider.refresh();  // Refresh the snippets tree
+        }
+    } catch (error) {
+        vscode.window.showErrorMessage('Error deleting snippet.');
+    }
+}
 
 
 

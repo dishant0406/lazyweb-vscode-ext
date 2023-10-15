@@ -63,7 +63,7 @@ export class SnippetTreeDataProvider implements vscode.TreeDataProvider<SnippetI
             return [];
         }
         const apiSnippets = await fetchSnippetsFromApi(token);
-        return apiSnippets.map((snippet: any) => new SnippetItem(snippet.shortcut, {
+        return apiSnippets.map((snippet: any) => new SnippetItem(snippet.shortcut, snippet, {
             command: 'lazyweb.openSnippet', 
             title: "",
             arguments: [snippet]
@@ -74,13 +74,15 @@ export class SnippetTreeDataProvider implements vscode.TreeDataProvider<SnippetI
 class SnippetItem extends vscode.TreeItem {
     constructor(
         public readonly label: string,
+        public readonly snippetData: any,
         public readonly command?: vscode.Command
     ) {
         super(label, vscode.TreeItemCollapsibleState.None);
     }
 
-    contextValue = 'snippet';
+    contextValue = 'snippetItem';
 }
+
 
 
 async function fetchSnippetsFromApi(token: string) {
