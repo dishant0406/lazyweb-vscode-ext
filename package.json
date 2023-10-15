@@ -5,6 +5,10 @@
   "version": "0.0.1",
   "publisher": "Dishant Sharma",
   "icon": "./src/assets/lazyweb-icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dishant0406/lazyweb-vscode-ext"
+  },
   "engines": {
     "vscode": "^1.83.0"
   },
