@@ -4,7 +4,7 @@
   "description": "Save and manage your code snippets with LazyWeb.",
   "version": "0.0.1",
   "publisher": "Dishant Sharma",
-  "icon": "./src/assets/lazyweb-icon.png",
+  "icon": "./src/assets/favicon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/dishant0406/lazyweb-vscode-ext"
