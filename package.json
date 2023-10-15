@@ -1,13 +1,16 @@
 {
   "name": "lazyweb",
-  "displayName": "lazyweb",
-  "description": "Save Snippet.",
+  "displayName": "LazyWeb Snippets",
+  "description": "Save and manage your code snippets with LazyWeb.",
   "version": "0.0.1",
+  "publisher": "Dishant Sharma",
+  "icon": "./src/assets/lazyweb-icon.png",
   "engines": {
     "vscode": "^1.83.0"
   },
   "categories": [
-    "Other"
+    "Programming Languages",
+    "Snippets"
   ],
   "activationEvents": ["*"],
   "main": "./out/extension.js",
@@ -28,21 +31,21 @@
     ],
     "menus": {
       "editor/context": [
-          {
-              "command": "lazyweb.sendSelectedCode",
-              "when": "editorHasSelection"
-          }
+        {
+          "command": "lazyweb.sendSelectedCode",
+          "when": "editorHasSelection"
+        }
       ]
     },
     "views": {
       "explorer": [
-          {
-              "id": "lazyweb.snippets",
-              "name": "Lazyweb Snippets",
-              "icon": "./src/assets/favicon.png"
-          }
+        {
+          "id": "lazyweb.snippets",
+          "name": "Lazyweb Snippets",
+          "icon": "./src/assets/favicon.png"
+        }
       ]
-  }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
