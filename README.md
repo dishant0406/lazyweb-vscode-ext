@@ -43,14 +43,14 @@ Ensure you have the following:
 
 ## Known Issues
 
-- If you find any bugs or issues, please [report them here](https://github.com/dishant0406).
+- If you find any bugs or issues, please [report them here](https://github.com/dishant0406/lazyweb-vscode-ext/issues).
 
 ## Contribution
 
-Want to contribute to the development of this extension? Check out our [GitHub repository](https://github.com/dishant0406).
+Want to contribute to the development of this extension? Check out our [GitHub repository](https://github.com/dishant0406/lazyweb-vscode-ext).
 
 ## License
 
-This extension is licensed under the [MIT License](LICENSE).
+This extension is licensed under the [MIT License](https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt).
 
 ---
