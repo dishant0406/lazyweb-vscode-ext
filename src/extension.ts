@@ -54,7 +54,7 @@ async function authenticateAndSaveToken(context: vscode.ExtensionContext) {
     }
 
     try {
-        const { data } = await APIClient.post('/auth/login', { email });
+        const { data } = await APIClient.post('/auth/login-ext', { email });
         
         // If authentication is successful
         if (data && data.success) {
