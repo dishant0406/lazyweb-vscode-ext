@@ -43,6 +43,46 @@ export class SnippetCompletionProvider implements vscode.CompletionItemProvider 
     }
 }
 
+export class SnippetTreeDataProvider implements vscode.TreeDataProvider<SnippetItem> {
+    private _onDidChangeTreeData: vscode.EventEmitter<SnippetItem | undefined> = new vscode.EventEmitter<SnippetItem | undefined>();
+    readonly onDidChangeTreeData: vscode.Event<SnippetItem | undefined> = this._onDidChangeTreeData.event;
+
+    constructor(private context: vscode.ExtensionContext) {}
+
+    refresh(): void {
+        this._onDidChangeTreeData.fire(undefined);
+    }
+
+    getTreeItem(element: SnippetItem): vscode.TreeItem {
+        return element;
+    }
+
+    async getChildren(element?: SnippetItem): Promise<SnippetItem[]> {
+        const token = this.context.globalState.get<string>('token');
+        if (!token) {
+            return [];
+        }
+        const apiSnippets = await fetchSnippetsFromApi(token);
+        return apiSnippets.map((snippet: any) => new SnippetItem(snippet.shortcut, {
+            command: 'lazyweb.openSnippet', 
+            title: "",
+            arguments: [snippet]
+        }));
+    }
+}
+
+class SnippetItem extends vscode.TreeItem {
+    constructor(
+        public readonly label: string,
+        public readonly command?: vscode.Command
+    ) {
+        super(label, vscode.TreeItemCollapsibleState.None);
+    }
+
+    contextValue = 'snippet';
+}
+
+
 async function fetchSnippetsFromApi(token: string) {
     const {data} = await APIClient.get('snippets/me', {
         headers: {

@@ -1,8 +1,13 @@
 import * as vscode from 'vscode';
-import { SnippetCompletionProvider } from './SnippetCompletionProvider';
+import { SnippetCompletionProvider, SnippetTreeDataProvider } from './SnippetCompletionProvider';
 import { APIClient } from './contants';
 
-export function activate(context: vscode.ExtensionContext) {
+let snippetDataProvider: SnippetTreeDataProvider | undefined;
+let completionProviderDisposable: vscode.Disposable | undefined;
+
+export async function activate(context: vscode.ExtensionContext) {
+    const token = context.globalState.get<string>('token');
+
     loadSnippetsIfTokenExists(context);
 
     context.subscriptions.push(vscode.commands.registerCommand('lazyweb.loginSnippet', async () => {
@@ -22,6 +27,22 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand('lazyweb.sendSelectedCode', async () => {
         sendSelectedCodeToBackend(context);
     }));
+
+    if (token && await verifyUser(token)) {
+        snippetDataProvider = new SnippetTreeDataProvider(context);
+        vscode.window.createTreeView('lazyweb.snippets', {
+            treeDataProvider: snippetDataProvider
+        });
+
+        // Register the command to handle snippet click
+        context.subscriptions.push(vscode.commands.registerCommand('lazyweb.openSnippet', async (snippet: any) => {
+            // Open the snippet in a new text editor
+            const newDocument = await vscode.workspace.openTextDocument({ content: snippet.snippetCode });
+            vscode.window.showTextDocument(newDocument);
+        }));
+    } else {
+        vscode.window.showErrorMessage('Authentication failed. Please login to access snippets.');
+    }
     
 
 }
@@ -61,31 +82,41 @@ async function authenticateAndSaveToken(context: vscode.ExtensionContext) {
 
 
 async function loadSnippetsIfTokenExists(context: vscode.ExtensionContext) {
-	const token = context.globalState.get<string>('token');
-	if (token) {
+    const token = context.globalState.get<string>('token');
+    if (token) {
+        // Verify the user
+        const verified = await verifyUser(token);
 
-            // Verify the user
-            const verified = await verifyUser(token);
+        // If the user is not verified, show an error and exit
+        if (!verified) {
+            vscode.window.showErrorMessage('Authentication failed. Please login again.');
+            return;
+        }
 
-            // If the user is not verified, show an error and exit
-            if (!verified) {
-                vscode.window.showErrorMessage('Authentication failed. Please login again.');
-                return;
-            }
+        // If there's an existing completion provider, dispose of it to prevent duplicates
+        if (completionProviderDisposable) {
+            completionProviderDisposable.dispose();
+        }
 
-			const provider = new SnippetCompletionProvider(token);
-			// Specify a document selector for both file and untitled schemes
-			const documentSelector: vscode.DocumentSelector = [
-					{ scheme: 'file' },
-					{ scheme: 'untitled' }
-			];
-			
-			context.subscriptions.push(vscode.languages.registerCompletionItemProvider(documentSelector, provider));
+        const provider = new SnippetCompletionProvider(token);
+        // Specify a document selector for both file and untitled schemes
+        const documentSelector: vscode.DocumentSelector = [
+            { scheme: 'file' },
+            { scheme: 'untitled' }
+        ];
 
-			vscode.window.showInformationMessage('Snippets loaded!');
-	} else {
-			vscode.window.showWarningMessage('No token found. Please login to load snippets.');
-	}
+        // Store the new completion provider's disposable to allow for clean-up later
+        completionProviderDisposable = vscode.languages.registerCompletionItemProvider(documentSelector, provider);
+        context.subscriptions.push(completionProviderDisposable);
+
+        vscode.window.showInformationMessage('Snippets loaded!');
+
+        if (snippetDataProvider) {
+            snippetDataProvider.refresh();
+        }
+    } else {
+        vscode.window.showWarningMessage('No token found. Please login to load snippets.');
+    }
 }
 
 async function sendSelectedCodeToBackend(context: vscode.ExtensionContext) {

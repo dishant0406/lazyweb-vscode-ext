@@ -9,21 +9,21 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": ["*"],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "lazyweb.loginSnippet",
-        "title": "Login Snippet"
+        "title": "Lazyweb Snippet Login"
       },
       {
         "command": "lazyweb.refreshSnippets",
-        "title": "Refresh Snippets"
+        "title": "Lazyweb Refresh Snippets"
       },
       {
         "command": "lazyweb.sendSelectedCode",
-        "title": "Send Selected Code to Backend"
+        "title": "Save Selected Code as Snippet"
       }
     ],
     "menus": {
@@ -33,7 +33,16 @@
               "when": "editorHasSelection"
           }
       ]
-    }
+    },
+    "views": {
+      "explorer": [
+          {
+              "id": "lazyweb.snippets",
+              "name": "Lazyweb Snippets",
+              "icon": "./src/assets/favicon.png"
+          }
+      ]
+  }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
