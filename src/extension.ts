@@ -83,8 +83,6 @@ async function authenticateAndSaveToken(context: vscode.ExtensionContext) {
     }
 }
 
-
-
 async function loadSnippetsIfTokenExists(context: vscode.ExtensionContext) {
     const token = context.globalState.get<string>('token');
     if (token) {
@@ -206,7 +204,7 @@ async function deleteSnippet(snippet: any, token: string | undefined){
         return;
     }
     try {
-        const {data} = await APIClient.delete(`/snippets/delete/${snippet.shortcut}`, {
+        const {data} = await APIClient.delete(`/snippets/delete/${snippet.label}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
